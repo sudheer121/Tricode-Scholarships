@@ -1,0 +1,6 @@
+crypto 
+cookie-parser
+body-parser 
+jsonwebtoken
+mysql
+bcryptjs
