@@ -1,6 +1,11 @@
 import React from "react";
 import { useRouter } from 'next/router'
 
+
+import { Formik, Field, ErrorMessage } from 'formik';
+import * as Yup from "yup";
+
+
 // reactstrap components
 import {
   Button,
@@ -18,6 +23,16 @@ import {
 } from "reactstrap";
 // layout for this page
 import Auth from "layouts/Auth.js";
+
+
+
+const SignInSchema = Yup.object().shape({
+  email: Yup.string().email().required("Email is required"),
+
+  password: Yup.string()
+    .required("Password is required"),
+});
+
 
 const Login = () => {
 
@@ -66,7 +81,19 @@ const Login = () => {
             <div className="text-center text-muted mb-4">
               <small>Sign in with credentials</small>
             </div>
-            <Form role="form">
+            <Formik
+              initialValues={{
+                email: "",
+                password : ""
+              }}
+              validationSchema={SignInSchema}
+              onSubmit={(values, actions) => {
+                console.log(values);
+                actions.resetForm();
+              }}
+            >
+            {(props) => (
+            <>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -77,9 +104,15 @@ const Login = () => {
                   <Input
                     placeholder="Email"
                     type="email"
-                    autoComplete="new-email"
+                    name="email"
+                    tag={Field}
+                    className={props.errors.password && props.touched.password ? 
+                      "input-error" : null}
                   />
                 </InputGroup>
+                {props.errors.email && props.touched.email && (
+                  <span className="text-danger">{props.errors.email}</span>
+                )}
               </FormGroup>
               <FormGroup>
                 <InputGroup className="input-group-alternative">
@@ -91,11 +124,17 @@ const Login = () => {
                   <Input
                     placeholder="Password"
                     type="password"
-                    autoComplete="new-password"
+                    name="password"
+                    tag={Field}
+                    className={props.errors.password && props.touched.password ? 
+                      "input-error" : null}
                   />
                 </InputGroup>
+                {props.errors.password && props.touched.password && (
+                  <span className="text-danger">{props.errors.password}</span>
+                )}
               </FormGroup>
-              <div className="custom-control custom-control-alternative custom-checkbox">
+              {/* <div className="custom-control custom-control-alternative custom-checkbox">
                 <input
                   className="custom-control-input"
                   id=" customCheckLogin"
@@ -107,13 +146,15 @@ const Login = () => {
                 >
                   <span className="text-muted">Remember me</span>
                 </label>
-              </div>
+              </div> */}
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button className="my-4" color="primary" onClick={props.handleSubmit}>
                   Sign in
                 </Button>
               </div>
-            </Form>
+            </>
+            )}
+            </Formik>
           </CardBody>
         </Card>
         <Row className="mt-3">
