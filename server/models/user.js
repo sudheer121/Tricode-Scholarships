@@ -33,3 +33,4 @@ const User = db.define("user", {
     type: DataTypes.BOOLEAN
   }
 });
+
