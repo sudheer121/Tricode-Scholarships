@@ -1,13 +1,12 @@
-const User = require("../models/user");
-
 const { genSaltSync, hashSync } = require('bcryptjs');
-
 const express = require("express");
-const router = express.Router();
+const User = require("../models/User");
 
+const router = express.Router();
 router.use(express.json());
 
 router.post("/register", async (req, res) => {
+    
     const body = req.body;
     const salt = genSaltSync(10);
     console.log(body);

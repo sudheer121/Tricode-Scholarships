@@ -1,24 +1,26 @@
 {
   "development": {
     "username": "root",
-    "password": "password",
+    "password": "Tripathi31!",
     "database": "tricode",
     "host": "127.0.0.1",
-    "port": "5001",
+    "port": "3306",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "password",
+    "password": "Tripathi31!",
     "database": "tricode",
-    "host": "127.0.0.1:5001",
+    "host": "127.0.0.1",
+    "port": "3306",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "password",
+    "password": "Tripathi31!",
     "database": "tricode",
-    "host": "127.0.0.1:5001",
+    "host": "127.0.0.1",
+    "port": "3306",
     "dialect": "mysql"
   }
 }
