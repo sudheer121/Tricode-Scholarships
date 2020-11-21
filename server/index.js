@@ -8,11 +8,22 @@ const {db} = require("./models")
 
 // var cookieParser = require("cookie-parser");
 // app.use(cookieParser());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+  next();
+});
 
 const register = require("./routes/register");
 const login = require("./routes/login");
+const student = require("./routes/student");
 app.use("/", register);
 app.use("/", login);
+app.use("/", student);
 
 async function testConnection() {
   try {

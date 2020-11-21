@@ -1,6 +1,7 @@
 const {
-    createUser
+    createUser, 
 } = require("../controllers/register"); 
+const { checkToken} = require("../middleware/tokenvalidation")
 
 const express = require("express");
 

@@ -7,13 +7,16 @@ module.exports = (sequelize, Sequelize) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasOne(models.Student, {
+        foreignKey: 'user_id'
+      });
     }
+
   };
   User.init({
     email: Sequelize.STRING,
     password: Sequelize.STRING,
-    isProfileCompleted: Sequelize.BOOLEAN
+    isProfileCompleted: Sequelize.BOOLEAN,
   }, {
     sequelize,
     modelName: 'User',

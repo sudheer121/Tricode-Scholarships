@@ -1,22 +1,29 @@
 const jwt = require("jsonwebtoken");
 const jwtsalt = process.env.JWT_SALT;
 
+const invalidToken = {
+    success:0,
+    message:"Token expired/invalid"
+}
+const notLoggedIn = {
+    success:0,
+    message:"Please login first"
+}
+
 module.exports = {
     checkToken: function(req,res,next){
-        token = req.cookies[process.env.COOKIE1]; 
+        token = req.headers.bearer; 
         if(token){
             jwt.verify(token, jwtsalt, function(err,decoded){
                 if(err){
-                    req.message = "Invalid/Expired Token"
-                    next();
+                    return res.json(invalidToken); 
                 } else {
                     req.decode = decoded; // attaching decoded info in req 
                     next(); 
                 }
             });
         } else {
-            req.message = "Please login first";
-            next();
+            return res.json(notLoggedIn); 
         }
     }
 };
