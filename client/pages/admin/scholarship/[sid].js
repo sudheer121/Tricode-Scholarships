@@ -1,6 +1,9 @@
 import React from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
+
+import { useRouter } from "next/router";
+
 // reactstrap components
 import {
   Button,
@@ -25,43 +28,45 @@ import Admin from "layouts/Admin.js";
 
 import Header from "components/Headers/Header.js";
 
-import { useRouter } from "next/router";
-
 const scholarships = [
-  {
-    id: "1",
-    name: "Scholarship 1",
-    course: "B.E. - Info. Tech",
-    university: "Mumbai",
-    fees: 144434
-  },
-  {
-    id: "2",
-    name: "Scholarship 2",
-    course: "B.E. - Comp. Sci.",
-    university: "Mumbai",
-    fees: 133232
-  },
-  {
-    id: "3",
-    name: "Scholarship 3",
-    course: "B.E. - EXTC",
-    university: "Mumbai",
-    fees: 143223
-  },
-  {
-    id: "4",
-    name: "Scholarship 4",
-    course: "B.E. - Production",
-    university: "Mumbai",
-    fees: 97000
-  }
-];
+    {
+      id: "1",
+      name: "Scholarship 1",
+      course: "B.E. - Info. Tech",
+      university: "Mumbai",
+      fees: 144434
+    },
+    {
+      id: "2",
+      name: "Scholarship 2",
+      course: "B.E. - Comp. Sci.",
+      university: "Mumbai",
+      fees: 133232
+    },
+    {
+      id: "3",
+      name: "Scholarship 3",
+      course: "B.E. - EXTC",
+      university: "Mumbai",
+      fees: 143223
+    },
+    {
+      id: "4",
+      name: "Scholarship 4",
+      course: "B.E. - Production",
+      university: "Mumbai",
+      fees: 97000
+    }
+  ];
 
 
-const Dashboard = () => {
+const Scholarship = () => {
   
-  const router = useRouter();
+    const router = useRouter();
+
+    const { sid } = router.query;
+
+    const details = scholarships.find((curr) => curr.id === sid );
 
     return (
       <>
@@ -75,22 +80,19 @@ const Dashboard = () => {
                   <Row className="align-items-center">
                     <div className="col">
                       <h6 className="text-uppercase text-light ls-1 mb-1">
-                        Explore
+                        Details
                       </h6>
-                      <h2 className="mb-0">Scholarships</h2>
+                      <h2 className="mb-0">{details.name}</h2>
                     </div>
                   </Row>
                 </CardHeader>
                 <CardBody>
                   <ListGroup>
-                  {scholarships.map(curr => (
-                      <ListGroupItem onClick={() => router.push(`scholarship/${curr.id}`)}>
-                        <CardTitle tag="h4"  style={{ cursor: "pointer" }}>{curr.name}</CardTitle>
-                        <CardText>Course: {curr.course}</CardText>
-                        <CardText>University: {curr.university}</CardText>
-                        <CardText>Fees: {curr.fees}</CardText>
+                      <ListGroupItem>
+                        <CardText>Course: {details.course}</CardText>
+                        <CardText>University: {details.university}</CardText>
+                        <CardText>Fees: {details.fees}</CardText>
                       </ListGroupItem>
-                  ))}
                   </ListGroup>
                 </CardBody>
               </Card>
@@ -101,6 +103,6 @@ const Dashboard = () => {
     );
   }
 
-Dashboard.layout = Admin;
+Scholarship.layout = Admin;
 
-export default Dashboard;
+export default Scholarship;
