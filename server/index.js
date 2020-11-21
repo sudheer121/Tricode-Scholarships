@@ -4,7 +4,8 @@ require('dotenv').config();
 let express = require('express');
 let app = express();
 
-const sequelize =  require("./startup/dbconfig")();
+const {db} = require("./models")
+
 // var cookieParser = require("cookie-parser");
 // app.use(cookieParser());
 
@@ -13,7 +14,7 @@ app.use("/", register);
 
 async function testConnection() {
   try {
-    await sequelize.authenticate();
+    await db.sequelize.authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);

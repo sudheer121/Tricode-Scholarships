@@ -1,22 +1,35 @@
-const db = require("../models")
+const { db } = require("../models")
 
 const { genSaltSync, hashSync } = require('bcryptjs');
 const express = require("express");
-const User = require("../models/User");
 
 const router = express.Router();
 router.use(express.json());
 
 router.post("/register", async (req, res) => {
-    
     const body = req.body;
     const salt = genSaltSync(10);
     console.log(body);
     body.password = hashSync(body.password, salt);
     try {
-        let newUser = await db.user.findAll({ where: { email: body.email } });
-        console.log(newUser.toJSON());
-        return newUser.toJSON();
+            db.User.findOrCreate({
+            where: { email: body.email },
+            defaults: { password: body.password, isProfileCompleted: false }
+        })
+            .then(function (user, created) {
+                if (created) {
+                    return res.json({
+                        'code': 200,
+                        'message': 'Resource Created',
+                        'user': user
+                    });
+                }
+                return res.json({
+                    'code': 200,
+                    'message': 'Alredy created User',
+                    'user': user
+                });
+            });
     } catch (error) {
         console.log(error);
     }
