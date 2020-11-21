@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
+import { AuthContext } from "../../context/store";
+
+
 // reactstrap components
 import {
   DropdownMenu,
@@ -18,15 +23,20 @@ import {
   Media,
 } from "reactstrap";
 
-class AdminNavbar extends React.Component {
-  render() {
+const AdminNavbar = props => {
+
+  const router = useRouter();
+
+  const auth = useContext(AuthContext);
+
+
     return (
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
           <Container fluid>
             <Link href="/admin/dashboard">
               <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
-                {this.props.brandText}
+                {props.brandText}
               </a>
             </Link>
             <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
@@ -89,7 +99,7 @@ class AdminNavbar extends React.Component {
                   <DropdownItem divider />
                   <DropdownItem
                     href="#pablo"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={(e) => { auth.logout(); router.push('/') }}
                   >
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
@@ -101,7 +111,6 @@ class AdminNavbar extends React.Component {
         </Navbar>
       </>
     );
-  }
 }
 
 export default AdminNavbar;

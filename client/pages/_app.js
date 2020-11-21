@@ -10,6 +10,8 @@ import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/nextjs-argon-dashboard.scss";
 
+import { Provider } from "../context/store";
+
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
   document.body.classList.add("body-page-transition");
@@ -71,9 +73,11 @@ export default class MyApp extends App {
           />
           <title>Tricode Scholarships</title>
         </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Provider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
       </React.Fragment>
     );
   }

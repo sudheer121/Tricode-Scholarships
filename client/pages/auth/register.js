@@ -88,9 +88,29 @@ const Register = () => {
                   passwordConfirmation: ""
                 }}
                 validationSchema={SignInSchema}
-                onSubmit={(values, actions) => {
-                  console.log(values);
-                  actions.resetForm();
+                onSubmit={async (values, actions) => {
+                  try {
+                    const response = await fetch("http://localhost:7000/register", {
+                      method: "POST",
+                      body: JSON.stringify({
+                        email: values.email,
+                        password: values.password
+                      }),
+                      headers: {
+                        'Content-Type': 'application/json'
+                      }
+                    });
+
+                    const responseData = await response.json();
+                    if (response.status === 200) {
+                      router.push('admin/profile');
+                    } else {
+                      actions.setSubmitting(false);
+                      actions.setErrors({ email: "Some error occurred, Please try again.", password: "Some error occurred, Please try again.", passwordConfirmation: "Some error occurred, Please try again." });
+                    }
+                  } catch (err) {
+                    console.log(err);
+                  }
                 }}
               >
                 {(props) => (
