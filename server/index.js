@@ -21,9 +21,11 @@ app.use((req, res, next) => {
 const register = require("./routes/register");
 const login = require("./routes/login");
 const student = require("./routes/student");
+const scholarship = require("./routes/scholarship");
 app.use("/", register);
 app.use("/", login);
 app.use("/", student);
+app.use("/", scholarship);
 
 async function testConnection() {
   try {
