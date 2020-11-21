@@ -12,7 +12,14 @@ const notLoggedIn = {
 
 module.exports = {
     checkToken: function(req,res,next){
-        token = req.headers.bearer; 
+        //token = req.headers.bearer; 
+        var token; 
+        try{
+            token = req.headers.authorization.split(" ")[1]; 
+        } catch(error) {
+            return res.json(notLoggedIn); 
+        }
+        
         if(token){
             jwt.verify(token, jwtsalt, function(err,decoded){
                 if(err){
