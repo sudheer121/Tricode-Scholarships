@@ -12,7 +12,7 @@ const notLoggedIn = {
 
 module.exports = {
     checkToken: function(req,res,next){
-        token = req.body.jwt; 
+        token = req.headers.bearer; 
         if(token){
             jwt.verify(token, jwtsalt, function(err,decoded){
                 if(err){

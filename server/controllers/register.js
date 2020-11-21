@@ -39,15 +39,23 @@ module.exports = {
     fillStudentForm :async (req,res) => {
         const decode = req.decode;
         const user_id = decode.payload.id; 
+        try { 
+            const insert = await db.Student.create({
+                user_id:user_id, 
+                name:"Asdsdsad"
+            })
+    
+            return res.json({
+                success:1,
+                message:"Details updated" ,
+                insert 
+            }); 
+        } catch(error) {
+            res.json({
+                success:0,
+                error 
+            })
+        }
         
-        const insert = await db.Student.create({
-            user_id:user_id
-        })
-
-        return res.json({
-            success:1,
-            message:"Details updated" ,
-            insert 
-        }); 
     }
 }

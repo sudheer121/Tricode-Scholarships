@@ -20,8 +20,10 @@ app.use((req, res, next) => {
 
 const register = require("./routes/register");
 const login = require("./routes/login");
+const student = require("./routes/student");
 app.use("/", register);
 app.use("/", login);
+app.use("/", student);
 
 async function testConnection() {
   try {

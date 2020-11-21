@@ -1,6 +1,5 @@
 const {
-    createUser,
-    fillStudentForm 
+    createUser, 
 } = require("../controllers/register"); 
 const { checkToken} = require("../middleware/tokenvalidation")
 
@@ -10,6 +9,4 @@ const router = express.Router();
 router.use(express.json());
 
 router.post("/register",createUser); 
-router.post("/studentform",checkToken,fillStudentForm); 
-
 module.exports = router 

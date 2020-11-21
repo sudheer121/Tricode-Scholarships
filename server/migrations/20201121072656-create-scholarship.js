@@ -41,3 +41,13 @@ module.exports = {
     await queryInterface.dropTable('scholarships');
   }
 };
+/*
+    father_name: 
+    mother_name: 
+    last_name: 
+    mobile_num: 
+    college_name: 
+    course : 
+    latest_marks : 
+    yearly_family_income :
+*/
