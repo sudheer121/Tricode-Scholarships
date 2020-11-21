@@ -30,7 +30,7 @@ app.use("/", scholarship);
 async function testConnection() {
   try {
     await db.sequelize.authenticate();
-    await db.sequelize.sync({force:true});
+    // await db.sequelize.sync({});
     console.log("All models were synchronized successfully.");
     console.log('Connection has been established successfully.');
   } catch (error) {
