@@ -1,31 +1,37 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('scholarships', {
+    await queryInterface.createTable('students_has_scholarship', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      status: {
         type: Sequelize.STRING
       },
-      description: {
+      acount_number: {
         type: Sequelize.STRING
       },
-      type: {
-        type: Sequelize.STRING
-      },
-      organisation_id: {
-        type: Sequelize.INTEGER(11),
+      user_id: {
+        type: Sequelize.INTEGER,
         references: {
-          model: 'Organisations',
-          key: 'id', 
+          model: 'Users',
+          key: 'id',
         },
         allowNull: false,
         foreignKey: true,
         onUpdate: 'CASCADE',
+      },
+      scholarship_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'scholarships',
+          key: 'id',
+        },
+        allowNull: false,
+        foreignKey: true,
       },
       createdAt: {
         allowNull: false,
@@ -38,6 +44,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('scholarships');
+    await queryInterface.dropTable('Students');
   }
 };

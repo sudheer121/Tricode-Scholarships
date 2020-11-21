@@ -10,6 +10,7 @@ module.exports = (sequelize, Sequelize) => {
       User.hasOne(models.Student, {
         foreignKey: 'user_id'
       });
+      User.belongsToMany(models.scholarship, { through: models.scholarship_has_users });
     }
 
   };
