@@ -9,5 +9,24 @@ module.exports = {
             success:1,
             list 
         })
+    },
+
+    getScholarship: async (req,res)=>{
+        const id = req.params.id;
+        try { 
+            const result = await db.Scholarship.findOne( {where:{id:id}} );  
+            console.log(result); 
+            res.json({
+                success:1,
+                result  
+            });
+        } catch(error) {
+            console.log(error); 
+            res.json({
+                success:0,
+                error:error 
+            }); 
+        }
+        
     }
 }

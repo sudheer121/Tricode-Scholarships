@@ -27,5 +27,23 @@ module.exports = {
             })
         }
         
+    },
+
+    getStudentProfile :async (req,res)=>{
+        const id = req.params.id;
+        try { 
+            const student = await db.Student.findOne( {where:{id:id}} );  
+            res.json({
+                success:1,
+                student  
+            });
+        } catch(error) {
+            console.log(error); 
+            res.json({
+                success:0,
+                error:error 
+            }); 
+        }
+        
     }
 }
