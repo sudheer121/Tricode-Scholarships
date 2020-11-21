@@ -1,16 +1,16 @@
-const { db } = require("../models")
+const { db } = require("../models");
 const express = require("express");
-
+const { encryptObj,decryptObj } = require("../middleware/encryptor"); 
 module.exports = {
 
     fillStudentForm :async (req,res) => {
         const payload = req.decode.payload;
-        const body = req.body; 
+        let body = req.body; 
         const user_id = payload.id; 
         const updateData = {};
-        console.log(typeof payload)
+        console.log(typeof payload);
         try { 
-            const insert = await db.Student.upsert({
+            const result = await db.Student.create({
                 user_id:user_id, 
                 ...body
             })
@@ -18,9 +18,10 @@ module.exports = {
             return res.json({
                 success:1,
                 message:"Details updated" ,
-                insert 
+                result 
             }); 
         } catch(error) {
+            console.log(error); 
             res.json({
                 success:0,
                 error 

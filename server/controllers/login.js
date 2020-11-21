@@ -8,12 +8,13 @@ module.exports = {
     login :async (req,res)=>{
         const body = req.body; 
         try {
-            const user = await db.User.findOne({ where:{ email: body.email } }); 
-            user.setDataValue('role',user.getRoles());
+            const user = await db.User.findAll({ where:{ email: body.email } }); 
+            console.log(user); 
+            //user.setDataValue('role',user.getRoles());
             if(!user.length){
                 return res.json({
                     success:0, 
-                    message:"User doesn't result"
+                    message:"User doesn't exist"
                 });
             }
             console.log(user[0].password); 

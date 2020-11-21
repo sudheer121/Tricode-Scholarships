@@ -25,6 +25,15 @@ module.exports = {
             res[key] = original; 
         }); 
     return res; 
+    },
+    enc : (val) => {
+        var ciphertext = CryptoJS.AES.encrypt(val.toString(), enckey).toString();
+        return ciphertext
+    },
+    dec : (val) => {
+        var bytes  = CryptoJS.AES.decrypt(val, enckey);
+        var original = bytes.toString(CryptoJS.enc.Utf8);
+        return original; 
     }
 }
     

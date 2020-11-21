@@ -1,6 +1,7 @@
 const {
     getScholarships, 
-    getScholarship
+    getScholarship,
+    applyOnScholarship 
 } = require("../controllers/scholarship"); 
 const { checkToken} = require("../middleware/tokenvalidation")
 
@@ -11,4 +12,6 @@ router.use(express.json());
 
 router.get("/scholarship",getScholarships); 
 router.get("/scholarship/:id",getScholarship); 
+router.post("/scholarship/:id/apply",checkToken, applyOnScholarship); //student applies for a scholarship having id :id 
+
 module.exports = router 

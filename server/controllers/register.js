@@ -17,17 +17,18 @@ module.exports = {
             defaults: { password: body.password, isProfileCompleted: false }
         })
         .then(function (user, created) {
-            if (created) {
+            console.log(user, user.isNewRecord);
+            if (user[1]) {
                 return res.json({
                     'code': 200,
                     'message': 'Resource Created',
-                    'user': user
+                    'user': user[0] 
                 });
             }
             return res.json({
                 'code': 200,
                 'message': 'Alredy created User',
-                'user': user
+                'user': user[0] 
             });
         });
         } catch (error) {

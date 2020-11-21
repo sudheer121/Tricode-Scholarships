@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   scholarship_has_users.init({
-    status: DataTypes.STRING,
+    status: { 
+    type:DataTypes.STRING,
+    defaultValue: 'pending'
+    },
     acount_number: DataTypes.STRING,
     scholarship_id: {
       type: DataTypes.INTEGER,
@@ -33,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'scholarship_has_users',
+    tableName: 'students_has_scholarship'
   });
   return scholarship_has_users;
 };
