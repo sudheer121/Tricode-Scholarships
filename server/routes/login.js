@@ -1,11 +1,11 @@
-// const express = require("express");
-// const router = express.Router();
+const {
+    login
+} = require("../controllers/login"); 
 
-// // Get user informations
-// router.get("/", (req, res) => {
-//   const user = (req.user && req.user.hidePassword()) || null;
-//   res.status(200).send({ message: "User info successfully retreived", user });
-// });
+const express = require("express");
 
+const router = express.Router();
+router.use(express.json());
 
-// module.exports = router;
+router.post("/login",login); 
+module.exports = router 

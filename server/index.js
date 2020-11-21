@@ -10,7 +10,9 @@ const {db} = require("./models")
 // app.use(cookieParser());
 
 const register = require("./routes/register");
+const login = require("./routes/login");
 app.use("/", register);
+app.use("/", login);
 
 async function testConnection() {
   try {
