@@ -21,8 +21,9 @@ module.exports = {
         }
         
         if(token){
-            jwt.verify(token, jwtsalt, function(err,decoded){
+            jwt.verify(token, jwtsalt, function(err,decoded) {
                 if(err){
+                    console.log(err);
                     return res.json(invalidToken); 
                 } else {
                     req.decode = decoded; // attaching decoded info in req 

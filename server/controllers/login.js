@@ -9,7 +9,7 @@ module.exports = {
         const body = req.body; 
         try {
             const user = await db.User.findAll({ where:{ email: body.email } }); 
-            console.log(user); 
+            // console.log(user); 
             //user.setDataValue('role',user.getRoles());
             if(!user.length){
                 return res.json({
@@ -17,7 +17,6 @@ module.exports = {
                     message:"User doesn't exist"
                 });
             }
-            console.log(user[0].password); 
             if(compareSync(body.password,user[0].password)){ 
                 user[0].password = null; 
                 return res.json({
@@ -25,7 +24,8 @@ module.exports = {
                     message:"Logged in",
                     result:user[0],
                     jwt: sign({ payload: user[0] }, process.env.JWT_SALT , {
-                        expiresIn: process.env.JWT_EXPDATE
+                        // expiresIn: process.env.JWT_EXPDATE
+                        expiresIn: "1d"
                     })
                 });
             }
