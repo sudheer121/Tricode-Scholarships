@@ -2,6 +2,7 @@ const { db } = require("../models")
 
 const { genSaltSync, hashSync } = require('bcryptjs');
 const express = require("express");
+const { use } = require("../routes/login");
 
 module.exports = {
 
@@ -33,5 +34,20 @@ module.exports = {
             console.log(error);
         }
 
+    },
+
+    fillStudentForm :async (req,res) => {
+        const decode = req.decode;
+        const user_id = decode.payload.id; 
+        
+        const insert = await db.Student.create({
+            user_id:user_id
+        })
+
+        return res.json({
+            success:1,
+            message:"Details updated" ,
+            insert 
+        }); 
     }
 }
