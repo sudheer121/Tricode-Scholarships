@@ -8,23 +8,22 @@ module.exports = {
     login :async (req,res)=>{
         const body = req.body; 
         try {
-
-            const result = await db.User.findAll({ where:{ email: body.email } }); 
-            
-            if(!result.length){
+            const user = await db.User.findOne({ where:{ email: body.email } }); 
+            user.setDataValue('role',user.getRoles());
+            if(!user.length){
                 return res.json({
                     success:0, 
                     message:"User doesn't result"
                 });
             }
-            console.log(result[0].password); 
-            if(compareSync(body.password,result[0].password)){ 
-                result[0].password = null; 
+            console.log(user[0].password); 
+            if(compareSync(body.password,user[0].password)){ 
+                user[0].password = null; 
                 return res.json({
                     success:1, 
                     message:"Logged in",
-                    result:result[0],
-                    jwt: sign({ payload: result[0] }, process.env.JWT_SALT , {
+                    result:user[0],
+                    jwt: sign({ payload: user[0] }, process.env.JWT_SALT , {
                         expiresIn: process.env.JWT_EXPDATE
                     })
                 });

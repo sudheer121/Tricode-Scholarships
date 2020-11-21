@@ -18,6 +18,16 @@ module.exports = {
       isProfileCompleted: {
         type: Sequelize.BOOLEAN
       },
+      organisation_id: {
+        type: Sequelize.INTEGER(11),
+        references: {
+          model: 'Organisations',
+          key: 'id',
+        },
+        allowNull: true,
+        foreignKey: true,
+        onUpdate: 'CASCADE',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

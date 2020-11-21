@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       Organisation.hasMany(models.scholarship, {
         foreignKey: 'organisation_id'
       });
+      Organisation.hasMany(models.User, {
+        foreignKey: 'organisation_id'
+      });
     }
   };
   Organisation.init({
