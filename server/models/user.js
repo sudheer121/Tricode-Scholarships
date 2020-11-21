@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
   User.init({
     email: Sequelize.STRING,
     password: Sequelize.STRING,
-    isProfileCompleted: Sequelize.BOOLEAN
+    isProfileCompleted: Sequelize.BOOLEAN,
   }, {
     sequelize,
     modelName: 'User',
