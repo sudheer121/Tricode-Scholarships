@@ -1,3 +1,5 @@
+const db = require("../models")
+
 const { genSaltSync, hashSync } = require('bcryptjs');
 const express = require("express");
 const User = require("../models/User");
@@ -12,7 +14,7 @@ router.post("/register", async (req, res) => {
     console.log(body);
     body.password = hashSync(body.password, salt);
     try {
-        let newUser = await User.findAll({ where: { email: body.email } });
+        let newUser = await db.user.findAll({ where: { email: body.email } });
         console.log(newUser.toJSON());
         return newUser.toJSON();
     } catch (error) {
