@@ -56,7 +56,7 @@ module.exports = {
             });
         }
         try {
-            const result = await db.Scholarship.create({
+            const result = await db.scholarship.create({
                 organisation_id: organisation_id,
                 ...body
             });
@@ -66,6 +66,7 @@ module.exports = {
                 result
             }); 
         } catch (error) {
+            console.log(error); 
             res.json({
                 success:0,
                 error
@@ -78,14 +79,6 @@ module.exports = {
         let body = req.body; 
         const user_id = payload.id;
         const scholarship_id = req.params.id; 
-
-        // const obj = {
-        //     user_id:user_id,
-        //     scholarship_id:scholarship_id,
-        //     ...body 
-        // }
-        // console.log(obj); 
-
         try {
             const result = await db.scholarship_has_users.create({
                 user_id:user_id,
@@ -100,6 +93,7 @@ module.exports = {
             }); 
             
         } catch(error) {
+            //console.log(error); 
             res.json({
                 success:0,
                 error
