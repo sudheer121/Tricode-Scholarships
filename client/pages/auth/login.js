@@ -44,41 +44,6 @@ const Login = () => {
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
-          {/* <CardHeader className="bg-transparent pb-5"> */}
-            {/* <div className="text-muted text-center mt-2 mb-3">
-              <small>Sign in with</small>
-            </div>
-            <div className="btn-wrapper text-center">
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={require("assets/img/icons/common/github.svg")}
-                  />
-                </span>
-                <span className="btn-inner--text">Github</span>
-              </Button>
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={require("assets/img/icons/common/google.svg")}
-                  />
-                </span>
-                <span className="btn-inner--text">Google</span>
-              </Button>
-            </div> */}
-          {/* </CardHeader> */}
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
               <small>Sign in with credentials</small>
@@ -105,8 +70,15 @@ const Login = () => {
                   const responseData = await response.json();
                   if (responseData.success === 1) {
                     let decodedToken = jwt.decode(responseData.jwt, { complete: true });
-                    auth.login(responseData.jwt, decodedToken.expiresIn);
-                    router.push('admin/dashboard');
+                    const role = decodedToken.payload.payload.organisation_id === null ? "admin" : "regulator";
+                    auth.login(responseData.jwt, decodedToken.expiresIn, role);
+                    // console.log(auth.role);
+                    if (role === "admin") {
+                      router.push('../admin/dashboard');
+                    }
+                    else {
+                      router.push('../regulator/dashboard');
+                    }
                   } else {
                     actions.setSubmitting(false);
                     actions.setErrors({ email: "Username or password is invalid", password: "Username or password is invalid" });
@@ -158,19 +130,6 @@ const Login = () => {
                   <span className="text-danger">{props.errors.password}</span>
                 )}
               </FormGroup>
-              {/* <div className="custom-control custom-control-alternative custom-checkbox">
-                <input
-                  className="custom-control-input"
-                  id=" customCheckLogin"
-                  type="checkbox"
-                />
-                <label
-                  className="custom-control-label"
-                  htmlFor=" customCheckLogin"
-                >
-                  <span className="text-muted">Remember me</span>
-                </label>
-              </div> */}
               <div className="text-center">
                 <Button className="my-4" color="primary" onClick={props.handleSubmit}>
                   Sign in

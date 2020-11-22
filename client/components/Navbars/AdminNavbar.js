@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+const jwt = require('jsonwebtoken');
 
 import { AuthContext } from "../../context/store";
 
@@ -29,12 +30,20 @@ const AdminNavbar = props => {
 
   const auth = useContext(AuthContext);
 
+  let email;
+
+  if (auth.token) {
+    let decodedToken = jwt.decode(auth.token, { complete: true });
+    email = decodedToken.payload.payload.email;
+  } else {
+    email = "ethan@gmail.com";
+  }
 
     return (
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
           <Container fluid>
-            <Link href="/admin/dashboard">
+            <Link href="/student/dashboard">
               <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
                 {props.brandText}
               </a>
@@ -58,12 +67,12 @@ const AdminNavbar = props => {
                     <span className="avatar avatar-sm rounded-circle">
                       <img
                         alt="..."
-                        src={require("assets/img/theme/team-4-800x800.jpg")}
+                        src={require("assets/img/theme/avatar.png")}
                       />
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm font-weight-bold">
-                        Jessica Jones
+                        {email}
                       </span>
                     </Media>
                   </Media>
@@ -72,30 +81,24 @@ const AdminNavbar = props => {
                   <DropdownItem className="noti-title" header tag="div">
                     <h6 className="text-overflow m-0">Welcome!</h6>
                   </DropdownItem>
-                  <Link href="/admin/profile">
+                  <Link href="/student/profile">
                     <DropdownItem>
                       <i className="ni ni-single-02" />
                       <span>My profile</span>
                     </DropdownItem>
                   </Link>
-                  <Link href="/admin/profile">
+                  {/* <Link href="/student/profile">
                     <DropdownItem>
                       <i className="ni ni-settings-gear-65" />
                       <span>Settings</span>
                     </DropdownItem>
                   </Link>
-                  <Link href="/admin/profile">
+                  <Link href="/student/profile">
                     <DropdownItem>
                       <i className="ni ni-calendar-grid-58" />
                       <span>Activity</span>
                     </DropdownItem>
-                  </Link>
-                  <Link href="/admin/profile">
-                    <DropdownItem>
-                      <i className="ni ni-support-16" />
-                      <span>Support</span>
-                    </DropdownItem>
-                  </Link>
+                  </Link> */}
                   <DropdownItem divider />
                   <DropdownItem
                     href="#pablo"

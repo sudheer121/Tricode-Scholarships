@@ -9,7 +9,6 @@ import {
   CardBody,
   CardText,
   CardTitle,
-  CardFooter,
   ListGroup, 
   ListGroupItem,
   NavItem,
@@ -22,13 +21,12 @@ import {
   Col,
 } from "reactstrap";
 // layout for this page
-import Admin from "layouts/Admin.js";
 
 import Header from "components/Headers/Header.js";
 
-import { AuthContext } from "../../context/store";
-
 import { useRouter } from "next/router";
+import Regulator from "layouts/Regulator.js";
+import { AuthContext } from "../../context/store";
 
 const scholarships = [
   {
@@ -68,8 +66,10 @@ const Dashboard = () => {
 
   const auth = useContext(AuthContext);
 
-  if (auth.role === "regulator") {
-    router.push("../regulator/dashboard");
+  console.log(auth.role);
+
+  if (auth.role === "admin") {
+    router.push("admin/dashboard");
   }
 
     return (
@@ -83,39 +83,30 @@ const Dashboard = () => {
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col">
-                      <h6 className="text-uppercase text-light ls-1 mb-1">
-                        Explore
-                      </h6>
-                      <h2 className="mb-0">Scholarships</h2>
+                      <h2 className="mb-0">Your Scholarships</h2>
                     </div>
                   </Row>
                 </CardHeader>
                 <CardBody>
                 <div class="row"> 
                   {scholarships.map(curr => (
-                    <div class="col-sm-6">                    
-                      <Card  className = "my-2" style = {{backgroundColor:'#99CFE8 ' }} >
-                        <CardTitle tag="h4"  style={{ cursor: "pointer" , margin: 20 } } >{curr.name}</CardTitle>
-                          <CardBody classname=" py-4 px-4" >
-                              <CardText>Course: {curr.course}</CardText>
-                              <CardText>University: {curr.university}</CardText>
-                              <CardText>Fees: {curr.fees}</CardText>
-                              
-                          </CardBody>
-
-                          <CardFooter className = "px-0 py-0">
-                              <Row className ="mx-0 my-0 "  >
-                                <Col className = "text-center py-2  bg-white ">
-                                    <h4 className ="mx-0" style={{ cursor: "pointer"}} onClick={() => router.push(`scholarship/${curr.id}`)}>View</h4></Col>
-                                <Col  className = "text-center py-2  bg-success "> 
-                                    <h4 className ="mx-0" style={{ cursor: "pointer"}} onClick={() => alert("submitted")}>Apply</h4></Col>
-                              </Row>
-                        </CardFooter>
+                    <div class="col-sm-6">
+                      <Card 
+                          onClick={() => router.push(`scholarship/${curr.id}`)} 
+                          className = "shadow my-2 py-4 px-4 " 
+                          style = {{backgroundColor:'#89CFE8 ' }}
+                           >
+                        <CardTitle tag="h3"  style={{ cursor: "pointer" , color:'#000000'}}>{curr.name}</CardTitle>
+                        <CardText style = {cardtext}>Course: {curr.course}</CardText>
+                        <CardText style = {cardtext}>University: {curr.university}</CardText>
+                        <CardText style = {cardtext}>Fees: {curr.fees}</CardText>
                       </Card>
-                    </div>  
-
+                      </div>
                   ))}
-                 </div>                   
+                  
+
+                  
+                  </div>
                 </CardBody>
               </Card>
             </Col>
@@ -125,6 +116,14 @@ const Dashboard = () => {
     );
   }
 
-Dashboard.layout = Admin;
+
+  const cardtext = {
+    color: '#000000',
+    fontFamily : 'Open Sans'
+  };
+
+Dashboard.layout = Regulator;
+
+
 
 export default Dashboard;

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+const jwt = require('jsonwebtoken');
 
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from "yup";
@@ -25,6 +26,9 @@ import Admin from "layouts/Admin.js";
 import UserHeader from "components/Headers/UserHeader.js";
 import Header from "components/Headers/Header.js";
 
+import { AuthContext } from "../../context/store";
+
+import { useRouter } from "next/router";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email().required("Email is required"),
@@ -95,8 +99,19 @@ class Thumb extends React.Component {
 
 
 
-class Profile extends React.Component {
-  render() {
+const Profile = () => {
+
+  const router = useRouter();
+
+  const auth = useContext(AuthContext);
+
+  if (auth.role === "regulator") {
+    router.push("../regulator/dashboard");
+  }
+
+  let decodedToken = jwt.decode(auth.token, { complete: true });
+  const email = decodedToken.payload.payload.email;
+
     return (
       <>
         <Header />
@@ -112,77 +127,42 @@ class Profile extends React.Component {
                         <img
                           alt="..."
                           className="rounded-circle"
-                          src={require("assets/img/theme/team-4-800x800.jpg")}
+                          src={require("assets/img/theme/avatar.png")}
                         />
                       </a>
                     </div>
                   </Col>
                 </Row>
-                {/* <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <div className="d-flex justify-content-between">
-                    <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      Message
-                    </Button>
-                  </div>
-                </CardHeader> */}
                 <CardBody className="pt-0 pt-md-6">
                   
                   <Row>
                     <div className="col">
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                       <Button
-                            className="float-right"
-                            color="primary"
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                            size="sm"
-                          >
-                            Edit Photo
-                          </Button>
+
                       </div>
                     </div>
                   </Row>
                   <div className="text-center">
                     <h3>
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
+                      Username
+                      <span className="font-weight-light">, Age</span>
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
+                      Location, Country
                     </div>
                     <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
+                      Latest Profession
                     </div>
                     <div>
                       <i className="ni education_hat mr-2" />
-                      University of Computer Science
+                      Organization
                     </div>
                     <hr className="my-4" />
                     <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
+                      Something about yourself
                     </p>
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      Show more
-                    </a>
                   </div>
                 </CardBody>
               </Card>
@@ -195,21 +175,13 @@ class Profile extends React.Component {
                       <h3 className="mb-0">My account</h3>
                     </Col>
                     <Col className="text-right" xs="4">
-                      {/* <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
-                      >
-                        Settings
-                      </Button> */}
                     </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
                 <Formik
                     initialValues={{
-                      email: "",
+                      email: email,
                       password : "",
                       passwordConfirmation: "",
                       firstName:"",
@@ -233,16 +205,62 @@ class Profile extends React.Component {
 
 
                     }}
-                    validationSchema={SignInSchema}
-                    onSubmit={(values, actions) => {
-                      console.log(values);
-                      actions.resetForm();
-                      alert("Submitted");
-
+                    // validationSchema={SignInSchema}
+                    onSubmit={async (values, actions) => {
+                      try {
+                        const response = await fetch("http://localhost:7000/student", {
+                          method: "POST",
+                          body: JSON.stringify({
+                            user_id : "1",
+                            name : "Ethan",
+                            father_name : "Vincent",
+                            mother_name : "Anita",
+                            last_name : "Palani",
+                            mobile_num : "9967481995",
+                            phone_number: "26782301",
+                            college_name: "Fr. CRCE",
+                            address: "Andheri",
+                            city: "Mumbai",
+                            country: "India",
+                            postal_code: "400058",
+                            current_course: "B.E. - I.T.",
+                            latest_marks: "79",
+                            yearly_family_income: "1000000",
+                            aadhar_number: "400590390293",
+                            applied_course: "Dummy",
+                            applied_course_fee: "Random",
+                            about_me: "I am an engineer"
+                        }),
+                          headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization' : "Bearer " +auth.token
+                          }
+                        });
+      
+                        const responseData = await response.json();
+                        actions.resetForm();
+                        // if (responseData.success === 1) {
+                        //   let decodedToken = jwt.decode(responseData.jwt, { complete: true });
+                        //   const role = decodedToken.payload.payload.organisation_id === null ? "admin" : "regulator";
+                        //   auth.login(responseData.jwt, decodedToken.expiresIn, role);
+                        //   // console.log(auth.role);
+                        //   if (role === "admin") {
+                        //     router.push('../admin/dashboard');
+                        //   }
+                        //   else {
+                        //     router.push('../regulator/dashboard');
+                        //   }
+                        // } else {
+                        //   actions.setSubmitting(false);
+                        //   actions.setErrors({ email: "Username or password is invalid", password: "Username or password is invalid" });
+                        // }
+                      } catch (err) {
+                        console.log(err);
+                      }
                     }}
                   >
                     {(props) => (
-                    <>
+                    <Form onSubmit={props.handleSubmit}>
                     <Row>
                         <Col lg="6">
                     <FormGroup>
@@ -676,7 +694,7 @@ class Profile extends React.Component {
                         Submit
                       </Button>
                     </div>
-                  </>
+                  </Form>
                     )}
                   </Formik>
                 </CardBody>
@@ -686,7 +704,6 @@ class Profile extends React.Component {
         </Container>
       </>
     );
-  }
 }
 
 Profile.layout = Admin;

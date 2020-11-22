@@ -24,11 +24,13 @@ import {
   Col,
 } from "reactstrap";
 // layout for this page
-import Admin from "layouts/Admin.js";
 
 import Header from "components/Headers/Header.js";
+import Regulator from "../../../layouts/Regulator";
 
 import { AuthContext } from "../../../context/store";
+
+
 
 
 const scholarships = [
@@ -65,14 +67,13 @@ const scholarships = [
 
 const Scholarship = () => {
   
-  const router = useRouter();
+    const router = useRouter();
 
   const auth = useContext(AuthContext);
 
-  if (auth.role === "regulator") {
-    router.push("../../regulator/dashboard");
+  if (auth.role === "admin") {
+    router.push("admin/dashboard");
   }
-
 
     const { sid } = router.query;
 
@@ -98,11 +99,14 @@ const Scholarship = () => {
                 </CardHeader>
                 <CardBody>
                   <ListGroup>
-                      <ListGroupItem>
+                      
                         <h4>Course: {details.course}</h4>
                         <h4>University: {details.university}</h4>
                         <h4>Fees: {details.fees}</h4>
-                      </ListGroupItem>
+                        <h4>Course: {details.course}</h4>
+                        <h4>University: {details.university}</h4>
+                        <h4>Fees: {details.fees}</h4>
+                      
                   </ListGroup>
                 </CardBody>
               </Card>
@@ -113,6 +117,6 @@ const Scholarship = () => {
     );
   }
 
-Scholarship.layout = Admin;
+Scholarship.layout = Regulator;
 
 export default Scholarship;

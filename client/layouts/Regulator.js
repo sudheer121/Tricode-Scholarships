@@ -7,9 +7,9 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import routes from "admin-routes.js";
+import routes from "regulator-routes.js";
 
-function Admin(props) {
+function Regulator(props) {
   // used for checking current route
   const router = useRouter();
   let mainContentRef = React.createRef();
@@ -26,13 +26,14 @@ function Admin(props) {
     }
     return "Brand";
   };
+
   return (
     <>
       <Sidebar
         {...props}
         routes={routes}
         logo={{
-          innerLink: "/admin/index",
+          innerLink: "/regulator/index",
           imgSrc: require("assets/img/brand/nextjs_argon_black.png"),
           imgAlt: "...",
         }}
@@ -48,4 +49,4 @@ function Admin(props) {
   );
 }
 
-export default Admin;
+export default Regulator;

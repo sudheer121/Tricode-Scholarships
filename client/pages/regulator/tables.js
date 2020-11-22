@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 // reactstrap components
 import {
-  Button,
   Badge,
   Card,
   CardHeader,
@@ -12,7 +11,6 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   Media,
-  Modal, ModalHeader, ModalBody, ModalFooter,
   Pagination,
   PaginationItem,
   PaginationLink,
@@ -23,11 +21,11 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 // layout for this page
-import Admin from "layouts/Admin.js";
 // core components
 import Header from "components/Headers/Header.js";
-
 import { AuthContext } from "../../context/store";
+import Regulator from "../../layouts/Regulator";
+
 
 const scholars = [
   {
@@ -61,10 +59,67 @@ const scholars = [
 ];
 
 
+
+const applicants = [
+  {
+      id: "1",
+      name : "Alice Bob",
+      title: "Scholarship #1",
+      amount: 15000.00,
+      status: "pending",
+      key: "1"
+  },
+  {
+      id: "2",
+      name : "Alice Bob",
+      title: "Scholarship #2",
+      amount: 1000.00,
+      status: "pending",
+      key: "2"
+  },
+  {
+      id: "3",
+      name : "Alice Bob",
+      title: "Scholarship #3",
+      amount: 10000.00,
+      status: "accepted",
+      key: "3"
+  },
+  {
+      id: "4",
+      name : "Alice Bob",
+      title: "Scholarship #1",
+      amount: 15000.00,
+      status: "pending",
+      key: "4"
+  },
+  {
+      id: "5",
+      name : "Alice Bob",
+      title: "Scholarship #3",
+      amount: 1000.00,
+      status: "pending",
+      key: "5"
+  },
+  {
+      id: "6",
+      name : "Alice Bob",
+      title: "Scholarship #3",
+      amount: 10000.00,
+      status: "accepted",
+      key: "6"
+  },
+  {
+      id: "7",
+      name : "Alice Bob",
+      title: "Scholarship #4",
+      amount: 9000.00,
+      status: "pending",
+      key: "7"
+  }
+];
+
 const stats = {accepted:"#00dd00", pending:"red"};
-const statsbg = {accepted:"#D8FFC8 ", pending:"white"};
-
-
 
 const Tables = () => {
 
@@ -72,16 +127,18 @@ const Tables = () => {
 
   const auth = useContext(AuthContext);
 
-  if (auth.role === "regulator") {
-    router.push("../regulator/dashboard");
+  if (auth.role === "admin") {
+    router.push("admin/dashboard");
   }
 
-
-  const [modal, setModal] = useState(false);
-  const [status, setStatus] = useState([])
-  const toggle = () => setModal(!modal);
-  const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={toggle}>&times;</button>;
-  
+  const countType =  (type)=> {
+    const countTypes = applicants.filter(function(applicant){
+      if(applicant.title == type){
+        return applicant;
+      }
+    });
+    return countTypes.length;
+  }
   
     return (
       <>
@@ -101,16 +158,18 @@ const Tables = () => {
                       <th scope="col">Scholarship</th>
                       <th scope="col" className = "text-right">Amount</th>
                       <th scope="col" className=" text-center">Status</th>
+                      <th scope = "col">Applicants</th>
                       {/* <th scope="col">Users</th>
                       <th scope="col">Completion</th> */}
+                      <th scope="col" />
                     </tr>
                   </thead>
                   <tbody>
 
                     {scholars.map((scholar, index) => {
                           return (
-                          <tr key = {index} style = {{backgroundColor : statsbg[scholar.status] }}>
-                            <td  style={{ cursor: "pointer" }} onClick={ toggle } >
+                          <tr key = {index}>
+                            <td style={{ cursor: "pointer" }} onClick={() => router.push(`applicationstatus/${scholar.id}`)}>
                               <Media>
                                   <span className="mb-0  mr-8" >
                                     {scholar.title}
@@ -119,36 +178,23 @@ const Tables = () => {
                             </td>
                             <td className = "text-right"> {scholar.amount}</td>
                             <td className=" text-center">
-                            <Badge color="" className="badge-dot mr-4">
+                                <Badge color="" className="badge-dot mr-4">
                                     <i style = {{backgroundColor: stats[scholar.status]  }} />    
-                                </Badge>                     
-                                {scholar.status}
+                                </Badge>                       
+                              {scholar.status}              
                             </td>
-                            
-                                <Modal isOpen={modal} toggle={toggle} className="" external={externalCloseBtn}>
-                                    {scholar.status == "accepted" 
-                                    ?<ModalHeader>Application Under Process</ModalHeader>:<ModalHeader>Application accepted</ModalHeader>
-                                    }  
-                                  <ModalBody>
-                                      <b>Your Application is under process.</b><br />
-                                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    </ModalBody>
+                            <td className="">
+                                {countType(scholar.title)} 
 
 
 
-
-                                  
-                                  <ModalFooter>
-                                    <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-                                    <Button color="secondary" onClick={toggle}>Cancel</Button>
-                                  </ModalFooter>
-                                </Modal>
-                            
+                              
+                            </td>
                           </tr>
                     )})}
                   </tbody>
                 </Table>
-                <CardFooter className="py-2">
+                <CardFooter className="py-4">
                   
                 </CardFooter>
               </Card>
@@ -161,6 +207,6 @@ const Tables = () => {
     );
 }
 
-Tables.layout = Admin;
+Tables.layout = Regulator;
 
 export default Tables;
