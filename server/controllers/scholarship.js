@@ -49,12 +49,12 @@ module.exports = {
         let body = req.body;
         const organisation_id = payload.organisation_id;
 
-        if(organisation_id === null) {
-            return res.json({
-                success:0,
-                message:"You are not a regulator" 
-            });
-        }
+        // if(organisation_id === null) {
+        //     return res.json({
+        //         success:0,
+        //         message:"You are not a regulator" 
+        //     });
+        // }
         try {
             const result = await db.scholarship.create({
                 organisation_id: organisation_id,

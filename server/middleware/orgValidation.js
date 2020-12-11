@@ -5,13 +5,13 @@ const cantAccess = {
 }
 
 module.exports = {
-    checkAdmin: function(req,res,next){
+    checkRegulator: function(req,res,next){ //A regulator is an organization 
         //token = req.headers.bearer; 
         const payload = req.decode.payload; 
-        if(payload.organization_id === null) { 
-            res.json(cantAccess); 
+        if(payload.organisation_id) { 
+            next();
         } else {
-            next(); 
+            return res.json(cantAccess); 
         };
     }
 }

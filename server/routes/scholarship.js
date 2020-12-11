@@ -5,7 +5,7 @@ const {
     addScholarship
 } = require("../controllers/scholarship"); 
 const { checkToken} = require("../middleware/tokenvalidation");
-const { checkAdmin } = require("../middleware/adminvalidation");
+const { checkRegulator } = require("../middleware/orgValidation"); // regulator is an organization 
 
 const express = require("express");
 
@@ -18,5 +18,6 @@ router.post("/scholarship/:id/apply",checkToken, applyOnScholarship); //student 
 
 //router.use("/regulator/scholarship/new",checkToken);
 //router.use("/regulator/scholarship/new",checkAdmin); 
-router.post("/regulator/scholarship/new",checkToken,addScholarship);
+var organizationCheck = [checkToken, checkRegulator]
+router.post("/regulator/scholarship/new",organizationCheck,addScholarship);
 module.exports = router 
