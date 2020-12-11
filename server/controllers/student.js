@@ -11,11 +11,17 @@ module.exports = {
         // console.log(payload);
         // console.log(typeof payload);
         try { 
-            const result = await db.Student.create({
-                user_id:user_id, 
-                ...body
-            });
-
+            // const result = await db.Student.create({
+            //     user_id:user_id, 
+            //     ...body
+            // });
+            const exists = await db.Student.findOne({ user_id:user_id}); 
+            let result = null; 
+            if(exists) {
+                result = await exists.update({...body});
+            } else {
+                result = await db.Student.create({...body,user_id:user_id});
+            }
             return res.json({
                 success:1,
                 message:"Details updated" ,
@@ -33,14 +39,17 @@ module.exports = {
     },
 
     getStudentProfile :async (req,res)=>{
-        const id = req.params.id;
+        const user_id = req.params.id;
         try { 
-            const student = await db.Student.findOne( {where:{user_id:id}} );  
+            const student = await db.Student.findOne( {where:{user_id:user_id}} );  
             console.log(student);
-            res.json({
-                success:1,
-                student  
-            });
+            if(student) { 
+                return res.json({
+                    success:1,
+                    student  
+                });
+            }
+            return res.json({success:0, message:"No such student exists"});
             
         } catch(error) {
             console.log(error); 

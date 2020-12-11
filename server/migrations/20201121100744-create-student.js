@@ -86,6 +86,7 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Students');
+     await Promise.resolve("yes"); 
+    //await queryInterface.dropTable('Students');
   }
 };

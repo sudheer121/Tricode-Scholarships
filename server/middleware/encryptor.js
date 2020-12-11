@@ -27,13 +27,19 @@ module.exports = {
     return res; 
     },
     enc : (val) => {
-        var ciphertext = CryptoJS.AES.encrypt(val.toString(), enckey).toString();
-        return ciphertext
+        if(val) { 
+            var ciphertext = CryptoJS.AES.encrypt(val.toString(), enckey).toString();
+            return ciphertext
+        }
+        return val 
     },
     dec : (val) => {
-        var bytes  = CryptoJS.AES.decrypt(val, enckey);
-        var original = bytes.toString(CryptoJS.enc.Utf8);
-        return original; 
+        if(val) { 
+            var bytes  = CryptoJS.AES.decrypt(val, enckey);
+            var original = bytes.toString(CryptoJS.enc.Utf8);
+            return original; 
+        }
+        return val 
     }
 }
     

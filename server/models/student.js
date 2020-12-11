@@ -11,7 +11,11 @@ module.exports = (sequelize, Sequelize) => {
     }
   };
   Student.init({
-    user_id: Sequelize.INTEGER, 
+    user_id: { 
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      primaryKey: true 
+    }, 
     name: { 
       type: Sequelize.STRING,
       get() {

@@ -12,7 +12,7 @@ const express = require("express");
 const router = express.Router();
 router.use(express.json());
 
-router.get("/scholarship",getScholarships); 
+router.get("/scholarships",getScholarships); 
 router.get("/scholarship/:id",getScholarship); // info about particular scholarship 
 router.post("/scholarship/:id/apply",checkToken, applyOnScholarship); //student applies for a scholarship having id :id 
 
