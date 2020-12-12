@@ -6,7 +6,10 @@ const {
 
     addScholarship,
     viewScholarshipByRegulator,
-    viewApplicationsOnScholarhip 
+    viewApplicationsOnScholarhip, 
+    acceptScholarship,
+    rejectScholarship,
+    payScholarship
 } = require("../controllers/scholarship"); 
 const { checkToken} = require("../middleware/tokenvalidation");
 const { checkRegulator } = require("../middleware/orgValidation"); // regulator is an organization 
@@ -26,5 +29,9 @@ var organizationCheck = [checkToken, checkRegulator]
 router.post("/regulator/scholarships/new",organizationCheck,addScholarship); //regulator adds scholarship 
 router.get("/regulator/scholarships",organizationCheck,viewScholarshipByRegulator); //regulator views scholarships 
 router.get("/regulator/scholarships/:id/applications",organizationCheck,viewApplicationsOnScholarhip ); // regulator views applications on particular scholarship 
+
+router.patch("/regulator/applications/:id/accept",organizationCheck,acceptScholarship); 
+router.patch("/regulator/applications/:id/reject",organizationCheck,rejectScholarship); 
+router.patch("/regulator/applications/:id/pay",organizationCheck,payScholarship); 
 
 module.exports = router 
