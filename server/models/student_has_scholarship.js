@@ -3,34 +3,35 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class scholarship_has_users extends Model {
+  class student_has_scholarship extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      scholarship_has_users.hasOne(models.User, {
-        foreignKey: 'id'
+        student_has_scholarship.belongsTo(models.User, {
+        foreignKey: 'id',sourceKey: 'user_id'
       });
 
-      scholarship_has_users.belongsTo(models.scholarship, {
-        foreignKey: 'id'
+      student_has_scholarship.belongsTo(models.scholarship, {
+        foreignKey: 'id',sourceKey: 'scholarship_id'
       });
     }
   };
-  scholarship_has_users.init({
+  student_has_scholarship.init({
     status: { 
     type:DataTypes.STRING,
     defaultValue: 'pending'
     },
-    acount_number: DataTypes.STRING,
+    account_number: DataTypes.STRING,
+    message: DataTypes.STRING,
     scholarship_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'scholarship_has_users',
-    tableName: 'students_has_scholarship'
+    modelName: 'student_has_scholarship',
+    tableName: 'student_has_scholarships'
   });
-  return scholarship_has_users;
+  return student_has_scholarship;
 };

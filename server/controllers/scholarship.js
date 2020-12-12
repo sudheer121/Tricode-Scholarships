@@ -77,26 +77,37 @@ module.exports = {
     applyOnScholarship : async (req,res) => { //student applies on particular scholarship 
         const payload = req.decode.payload;
         let body = req.body; 
+        
         const user_id = payload.id;
         const scholarship_id = req.params.id; 
+        console.log(body,scholarship_id); 
         try {
-            const result = await db.scholarship_has_users.create({
-                user_id:user_id,
-                scholarship_id:scholarship_id,
-                ...body 
-            });
-            console.log(result);
-            res.json({
-                success:1,
-                user_id,
-                scholarship_id 
-            }); 
-            
+
+            const exists = await db.student_has_scholarship.findOne({ where: {user_id, scholarship_id} });
+            console.log(exists); 
+            if(exists) {
+                return res.json({
+                    success:1,
+                    message:"Already applied"
+                })
+            } else {
+                const result = await db.student_has_scholarship.create({
+                    user_id:user_id,
+                    scholarship_id:scholarship_id,
+                    ...body 
+                });
+                res.json({
+                    success:1,
+                    message: "Application under process",
+                    user_id,
+                    scholarship_id 
+                });
+            }
         } catch(error) {
-            //console.log(error); 
+            console.log(error); 
             res.json({
                 success:0,
-                error
+                message:"No such scholarship exists"
             }); 
         }
         
@@ -132,9 +143,10 @@ module.exports = {
                 response  
             });
         } catch (error) {
+            console.log(error); 
             res.json({
                 success:0,
-                error
+                message:"No such scholarship exists"
             }); 
         }
     },

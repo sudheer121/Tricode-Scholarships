@@ -10,6 +10,6 @@ const router = express.Router();
 router.use(express.json());
 
 router.post("/student",checkToken,fillStudentForm); // fill form 
-router.get("/student/:id",getStudentProfile);       // get profile 
+router.get("/student/:id",getStudentProfile);       // get profile  /:id rakhna hai ki nahi ? 
 
 module.exports = router 
