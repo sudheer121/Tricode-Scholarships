@@ -22,10 +22,13 @@ const register = require("./routes/register");
 const login = require("./routes/login");
 const student = require("./routes/student");
 const scholarship = require("./routes/scholarship");
+const regulator = require("./routes/regulator");
+
 app.use("/", register);
 app.use("/", login);
 app.use("/", student);
 app.use("/", scholarship);
+app.use("/", regulator);
 
 async function testConnection() {
   try {

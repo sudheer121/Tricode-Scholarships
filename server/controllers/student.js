@@ -37,6 +37,23 @@ module.exports = {
         }
         
     },
+    getProfile : async(req,res)=>{ //student gets own profile 
+        const user_id = req.decode.payload.id;
+        try { 
+            const result = await db.Student.findOne({ where:{user_id} }); 
+            return res.json({
+                success:1,
+                message:"Profile fetch successful",
+                result
+            })
+        } catch(error) { 
+            console.log(error); 
+            return res.json({
+                success:0,
+                message:"Coudn't get profile"
+            })
+        }
+    }, 
 
     getStudentProfile :async (req,res)=>{
         const user_id = req.params.id;

@@ -14,18 +14,20 @@ module.exports = {
             console.log(list); 
             res.json({
                 success:1,
+                message:"Fetch successful",
                 list 
             })
         } catch(error) {
             res.json({
                 success:0,
+                message:"Fetch unsuccessful",
                 error 
             })
         }
         
     },
 
-    getScholarship: async (req,res)=>{
+    getScholarship: async (req,res)=>{ //student views a particular scholarship 
         const id = req.params.id;
         try { 
             const result = await db.scholarship.findOne( {where:{id:id}} );  
@@ -43,37 +45,6 @@ module.exports = {
         }
         
     },
-
-    addScholarship: async (req, res) => {
-        const payload = req.decode.payload;
-        let body = req.body;
-        const organisation_id = payload.organisation_id;
-
-        // if(organisation_id === null) {
-        //     return res.json({
-        //         success:0,
-        //         message:"You are not a regulator" 
-        //     });
-        // }
-        try {
-            const result = await db.scholarship.create({
-                organisation_id: organisation_id,
-                ...body
-            });
-
-            res.json({
-                success:1,
-                result
-            }); 
-        } catch (error) {
-            console.log(error); 
-            res.json({
-                success:0,
-                error
-            }); 
-        }
-    },
-
     applyOnScholarship : async (req,res) => { //student applies on particular scholarship 
         const payload = req.decode.payload;
         let body = req.body; 
@@ -86,9 +57,11 @@ module.exports = {
             const exists = await db.student_has_scholarship.findOne({ where: {user_id, scholarship_id} });
             console.log(exists); 
             if(exists) {
+                let result = await exists.update({...body});
                 return res.json({
                     success:1,
-                    message:"Already applied"
+                    message:"Application updated",
+                    result
                 })
             } else {
                 const result = await db.student_has_scholarship.create({
@@ -112,7 +85,95 @@ module.exports = {
         }
         
     },
+    studentViewsApplications : async(req,res)=>{
+        const user_id = req.decode.payload.id;
+        try {
+            const result = await db.student_has_scholarship.findAll({user_id}); 
+            return res.json({
+                success:1,
+                message:"Fetch successful",
+                result
+            }); 
+        } catch(error) {
+            console.log(error); 
+            return res.json({
+                success:0,
+                message:"There was an error"
+            })
+        }
+    },
+    
+    // REGULATOR RELATED CONTROLLERS BELOW 
+    addScholarship: async (req, res) => { 
+        const payload = req.decode.payload;
+        let body = req.body;
+        const organisation_id = payload.organisation_id;
 
+        try {
+            const result = await db.scholarship.create({
+                organisation_id: organisation_id,
+                ...body
+            });
+
+            res.json({
+                success:1,
+                result
+            }); 
+        } catch (error) {
+            console.log(error); 
+            res.json({
+                success:0,
+                error
+            }); 
+        }
+    },
+    viewScholarshipByRegulator: async(req,res)=>{
+        const organisation_id = req.decode.payload.organisation_id; 
+        try { 
+            
+            const result = await db.scholarship.findAll({ where:{organisation_id} }); 
+            return res.json({
+                success:1,
+                message:"Fetch successful",
+                result 
+            }); 
+
+        } catch(error) {
+            console.log(error); 
+            return res.json({
+                success:0,
+                message:"Fetch unsuccessful"
+            })
+        }
+    }, 
+    viewApplicationsOnScholarhip: async(req,res)=>{
+        const scholarship_id = req.params.id; 
+        const organisation_id = req.decode.payload.organisation_id; 
+        try { 
+            // regulator shoudn't be able to view other organizations scholarship applications 
+            const exists = await db.scholarship.findOne({ where:{id:scholarship_id,organisation_id }});
+            if(exists) { 
+                console.log(exists,"Asdsdsd"); 
+                const result = await db.student_has_scholarship.findAll({ where:{scholarship_id:scholarship_id }});
+                return res.json({
+                    success:1,
+                    message:"Fetch successful",
+                    result 
+                })
+            } else { 
+                return res.json({
+                    success:0,
+                    message:"No such scholarship from your organization exists" 
+                })
+            }
+        } catch(error){ 
+            console.log(error); 
+            return res.json({
+                success:0,
+                message:"Fetch unsuccessful",
+            })
+        }
+    }, 
     acceptScholarship: async(req, res) => {
         const payload = req.decode.payload;
         const application_id = req.params.id;
