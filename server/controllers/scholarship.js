@@ -100,7 +100,7 @@ module.exports = {
     studentViewsApplications : async(req,res)=>{
         const user_id = req.decode.payload.id;
         try {
-            const result = await db.student_has_scholarship.findAll({user_id}); 
+            const result = await db.student_has_scholarship.findAll({ where:{user_id} }); 
             return res.json(successObj(result)); 
         } catch(error) {
             console.log(error); 

@@ -2,7 +2,7 @@ const {
     fillStudentForm, 
     getProfile
 } = require("../controllers/student"); 
-const { checkToken} = require("../middleware/tokenvalidation")
+const { checkToken } = require("../middleware/tokenvalidation")
 
 const express = require("express");
 

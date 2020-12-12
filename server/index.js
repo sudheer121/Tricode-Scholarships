@@ -5,9 +5,7 @@ let express = require('express');
 let app = express();
 
 const {db} = require("./models")
-
-// var cookieParser = require("cookie-parser");
-// app.use(cookieParser());
+ 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -23,12 +21,14 @@ const login = require("./routes/login");
 const student = require("./routes/student");
 const scholarship = require("./routes/scholarship");
 const regulator = require("./routes/regulator");
-
+const organisation = require('./routes/organisation');
 app.use("/", register);
 app.use("/", login);
 app.use("/", student);
 app.use("/", scholarship);
 app.use("/", regulator);
+app.use("/",organisation); 
+
 
 async function testConnection() {
   try {

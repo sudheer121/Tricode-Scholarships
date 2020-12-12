@@ -55,7 +55,7 @@ module.exports = {
         }
     }, 
 
-    getStudentProfile :async (req,res)=>{
+    getStudentProfile :async (req,res)=>{ //only regulator can view 
         const user_id = req.params.id;
         try { 
             const student = await db.Student.findOne( {where:{user_id:user_id}} );  
