@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-const jwt = require('jsonwebtoken');
 
 import { AuthContext } from "../../context/store";
 
@@ -30,14 +29,6 @@ const AdminNavbar = props => {
 
   const auth = useContext(AuthContext);
 
-  let email;
-
-  if (auth.token) {
-    let decodedToken = jwt.decode(auth.token, { complete: true });
-    email = decodedToken.payload.payload.email;
-  } else {
-    email = "ethan@gmail.com";
-  }
 
     return (
       <>
@@ -72,7 +63,7 @@ const AdminNavbar = props => {
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm font-weight-bold">
-                        {email}
+                        User
                       </span>
                     </Media>
                   </Media>

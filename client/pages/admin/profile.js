@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-const jwt = require('jsonwebtoken');
 
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from "yup";
@@ -109,9 +108,6 @@ const Profile = () => {
     router.push("../regulator/dashboard");
   }
 
-  let decodedToken = jwt.decode(auth.token, { complete: true });
-  const email = decodedToken.payload.payload.email;
-
     return (
       <>
         <Header />
@@ -181,7 +177,7 @@ const Profile = () => {
                 <CardBody>
                 <Formik
                     initialValues={{
-                      email: email,
+                      email: "",
                       password : "",
                       passwordConfirmation: "",
                       firstName:"",
@@ -205,62 +201,16 @@ const Profile = () => {
 
 
                     }}
-                    // validationSchema={SignInSchema}
-                    onSubmit={async (values, actions) => {
-                      try {
-                        const response = await fetch("http://localhost:7000/student", {
-                          method: "POST",
-                          body: JSON.stringify({
-                            user_id : "1",
-                            name : "Ethan",
-                            father_name : "Vincent",
-                            mother_name : "Anita",
-                            last_name : "Palani",
-                            mobile_num : "9967481995",
-                            phone_number: "26782301",
-                            college_name: "Fr. CRCE",
-                            address: "Andheri",
-                            city: "Mumbai",
-                            country: "India",
-                            postal_code: "400058",
-                            current_course: "B.E. - I.T.",
-                            latest_marks: "79",
-                            yearly_family_income: "1000000",
-                            aadhar_number: "400590390293",
-                            applied_course: "Dummy",
-                            applied_course_fee: "Random",
-                            about_me: "I am an engineer"
-                        }),
-                          headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization' : "Bearer " +auth.token
-                          }
-                        });
-      
-                        const responseData = await response.json();
-                        actions.resetForm();
-                        // if (responseData.success === 1) {
-                        //   let decodedToken = jwt.decode(responseData.jwt, { complete: true });
-                        //   const role = decodedToken.payload.payload.organisation_id === null ? "admin" : "regulator";
-                        //   auth.login(responseData.jwt, decodedToken.expiresIn, role);
-                        //   // console.log(auth.role);
-                        //   if (role === "admin") {
-                        //     router.push('../admin/dashboard');
-                        //   }
-                        //   else {
-                        //     router.push('../regulator/dashboard');
-                        //   }
-                        // } else {
-                        //   actions.setSubmitting(false);
-                        //   actions.setErrors({ email: "Username or password is invalid", password: "Username or password is invalid" });
-                        // }
-                      } catch (err) {
-                        console.log(err);
-                      }
+                    validationSchema={SignInSchema}
+                    onSubmit={(values, actions) => {
+                      console.log(values);
+                      actions.resetForm();
+                      alert("Submitted");
+
                     }}
                   >
                     {(props) => (
-                    <Form onSubmit={props.handleSubmit}>
+                    <>
                     <Row>
                         <Col lg="6">
                     <FormGroup>
@@ -694,7 +644,7 @@ const Profile = () => {
                         Submit
                       </Button>
                     </div>
-                  </Form>
+                  </>
                     )}
                   </Formik>
                 </CardBody>

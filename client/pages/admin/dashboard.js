@@ -9,7 +9,6 @@ import {
   CardBody,
   CardText,
   CardTitle,
-  CardFooter,
   ListGroup, 
   ListGroupItem,
   NavItem,
@@ -94,23 +93,11 @@ const Dashboard = () => {
                 <div class="row"> 
                   {scholarships.map(curr => (
                     <div class="col-sm-6">                    
-                      <Card  className = "my-2" style = {{backgroundColor:'#99CFE8 ' }} >
-                        <CardTitle tag="h4"  style={{ cursor: "pointer" , margin: 20 } } >{curr.name}</CardTitle>
-                          <CardBody classname=" py-4 px-4" >
-                              <CardText>Course: {curr.course}</CardText>
-                              <CardText>University: {curr.university}</CardText>
-                              <CardText>Fees: {curr.fees}</CardText>
-                              
-                          </CardBody>
-
-                          <CardFooter className = "px-0 py-0">
-                              <Row className ="mx-0 my-0 "  >
-                                <Col className = "text-center py-2  bg-white ">
-                                    <h4 className ="mx-0" style={{ cursor: "pointer"}} onClick={() => router.push(`scholarship/${curr.id}`)}>View</h4></Col>
-                                <Col  className = "text-center py-2  bg-success "> 
-                                    <h4 className ="mx-0" style={{ cursor: "pointer"}} onClick={() => alert("submitted")}>Apply</h4></Col>
-                              </Row>
-                        </CardFooter>
+                      <Card onClick={() => router.push(`scholarship/${curr.id}`)} className = "my-2 py-4 px-4" style = {{backgroundColor:'#99CFE8 ' }} >
+                        <CardTitle tag="h4"  style={{ cursor: "pointer" }}>{curr.name}</CardTitle>
+                        <CardText>Course: {curr.course}</CardText>
+                        <CardText>University: {curr.university}</CardText>
+                        <CardText>Fees: {curr.fees}</CardText>
                       </Card>
                     </div>  
 

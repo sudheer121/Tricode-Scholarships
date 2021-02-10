@@ -1,10 +1,10 @@
 {
   "development": {
     "username": "root",
-    "password": "password",
+    "password": "root",
     "database": "tricode",
     "host": "127.0.0.1",
-    "port": "5001",
+    "port": "3306",
     "dialect": "mysql"
   },
   "test": {
