@@ -48,7 +48,15 @@ module.exports = {
     getScholarships:async (req,res) => {  //view all scholarships to apply for 
         
         try { 
-            const list = await db.scholarship.findAll();
+            const list = await db.scholarship.findAll({
+                include : [
+                    {
+                        model : db.Organisation ,
+                        attributes : ['name']
+                    }
+                ]
+            },
+            {raw:true});
             console.log(list); 
             return res.json(successObj(list)); 
         } catch(error) { console.log(error); 
@@ -61,7 +69,7 @@ module.exports = {
         const id = req.params.id;
         try { 
             const result = await db.scholarship.findOne( {where:{id:id}} );  
-            console.log(result); 
+            //console.log(result); 
             res.json(successObj(result));
         } catch(error) {
             console.log(error); 
