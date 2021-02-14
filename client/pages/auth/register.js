@@ -68,7 +68,7 @@ const Register = () => {
 
                     const responseData = await response.json();
                     if (response.status === 200) {
-                      router.push('admin/profile');
+                      router.push('student/profile');
                     } else {
                       actions.setSubmitting(false);
                       actions.setErrors({ email: "Some error occurred, Please try again.", password: "Some error occurred, Please try again.", passwordConfirmation: "Some error occurred, Please try again." });

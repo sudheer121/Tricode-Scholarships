@@ -21,7 +21,7 @@ import {
   Col,
 } from "reactstrap";
 // layout for this page
-import Admin from "layouts/Admin.js";
+import Student from "layouts/Student.js";
 
 import Header from "components/Headers/Header.js";
 
@@ -29,40 +29,49 @@ import { AuthContext } from "../../context/store";
 
 import { useRouter } from "next/router";
 
-const scholarships = [
+// const scholarships = [
+//   {
+//     id: "1",
+//     name: "Scholarship 1",
+//     course: "B.E. - Info. Tech",
+//     university: "Mumbai",
+//     fees: 144434
+//   },
+//   {
+//     id: "2",
+//     name: "Scholarship 2",
+//     course: "B.E. - Comp. Sci.",
+//     university: "Mumbai",
+//     fees: 133232
+//   },
+//   {
+//     id: "3",
+//     name: "Scholarship 3",
+//     course: "B.E. - EXTC",
+//     university: "Mumbai",
+//     fees: 143223
+//   },
+//   {
+//     id: "4",
+//     name: "Scholarship 4",
+//     course: "B.E. - Production",
+//     university: "Mumbai",
+//     fees: 97000
+//   }
+// ];
+
+const dummy = [
   {
-    id: "1",
-    name: "Scholarship 1",
-    course: "B.E. - Info. Tech",
-    university: "Mumbai",
-    fees: 144434
-  },
-  {
-    id: "2",
-    name: "Scholarship 2",
-    course: "B.E. - Comp. Sci.",
-    university: "Mumbai",
-    fees: 133232
-  },
-  {
-    id: "3",
-    name: "Scholarship 3",
-    course: "B.E. - EXTC",
-    university: "Mumbai",
-    fees: 143223
-  },
-  {
-    id: "4",
-    name: "Scholarship 4",
-    course: "B.E. - Production",
-    university: "Mumbai",
-    fees: 97000
+    id : "1",
+    title : "This is title",
+    description : "This is description",
+    type : "BE IT",
+    postedBy : "Organization ID",
   }
-];
+] 
 
-
-const Dashboard = () => {
-  
+const Dashboard = ({data}) => {
+  console.log(data); 
   const router = useRouter();
 
   const auth = useContext(AuthContext);
@@ -91,16 +100,15 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardBody>
                 <div class="row"> 
-                  {scholarships.map(curr => (
+                  {data.map(curr => (
                     <div class="col-sm-6">                    
                       <Card onClick={() => router.push(`scholarship/${curr.id}`)} className = "my-2 py-4 px-4" style = {{backgroundColor:'#99CFE8 ' }} >
-                        <CardTitle tag="h4"  style={{ cursor: "pointer" }}>{curr.name}</CardTitle>
-                        <CardText>Course: {curr.course}</CardText>
-                        <CardText>University: {curr.university}</CardText>
-                        <CardText>Fees: {curr.fees}</CardText>
+                        <CardTitle tag="h4"  style={{ cursor: "pointer" }}>{curr.title}</CardTitle>
+                        <CardText>Course: {curr.type}</CardText>
+                        <CardText>PostedBy: {curr.organisation_id}</CardText>
+                        {/* <CardText>Fees: {curr.description}</CardText> */}
                       </Card>
                     </div>  
-
                   ))}
                  </div>                   
                 </CardBody>
@@ -110,8 +118,25 @@ const Dashboard = () => {
         </Container>
       </>
     );
-  }
+}
 
-Dashboard.layout = Admin;
+export const getStaticProps = async () => { 
+  const res = await fetch("http://localhost:7000/student/scholarships"); 
+  let data = await res.json();
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+  data = data.result; 
+  //console.log(typeof data);
+  return { 
+    props : {
+      data : data 
+    }
+  }
+}
+
+Dashboard.layout = Student;
 
 export default Dashboard;

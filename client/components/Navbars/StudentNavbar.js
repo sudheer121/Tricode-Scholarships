@@ -23,7 +23,7 @@ import {
   Media,
 } from "reactstrap";
 
-const AdminNavbar = props => {
+const StudentNavbar = props => {
 
   const router = useRouter();
 
@@ -107,4 +107,4 @@ const AdminNavbar = props => {
     );
 }
 
-export default AdminNavbar;
+export default StudentNavbar;

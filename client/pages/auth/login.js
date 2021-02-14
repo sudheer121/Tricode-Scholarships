@@ -70,11 +70,11 @@ const Login = () => {
                   const responseData = await response.json();
                   if (responseData.success === 1) {
                     let decodedToken = jwt.decode(responseData.jwt, { complete: true });
-                    const role = decodedToken.payload.payload.organisation_id === null ? "admin" : "regulator";
+                    const role = decodedToken.payload.payload.organisation_id === null ? "student" : "regulator";
                     auth.login(responseData.jwt, decodedToken.expiresIn, role);
                     // console.log(auth.role);
-                    if (role === "admin") {
-                      router.push('../admin/dashboard');
+                    if (role === "student") {
+                      router.push('../student/dashboard');
                     }
                     else {
                       router.push('../regulator/dashboard');

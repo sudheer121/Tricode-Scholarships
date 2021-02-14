@@ -3,25 +3,25 @@ var routes = [
     path: "/dashboard",
     name: "Scholarships",
     icon: "ni ni-tv-2 text-primary",
-    layout: "/admin",
+    layout: "/student",
   },
   {
     path: "/profile",
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
-    layout: "/admin",
+    layout: "/student",
   },
   {
     path: "/tables",
     name: "Status",
     icon: "ni ni-bullet-list-67 text-red",
-    layout: "/admin",
+    layout: "/student",
   },
   {
     path: "/about",
     name: "About us",
     icon: " ni ni-book-bookmark text-yellow",
-    layout: "/admin",
+    layout: "/student",
   }
 ];
 export default routes;

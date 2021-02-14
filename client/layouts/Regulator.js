@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
-import AdminNavbar from "components/Navbars/AdminNavbar.js";
-import AdminFooter from "components/Footers/AdminFooter.js";
+import StudentNavbar from "components/Navbars/StudentNavbar.js";
+import StudentFooter from "components/Footers/StudentFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "regulator-routes.js";
@@ -39,10 +39,10 @@ function Regulator(props) {
         }}
       />
       <div className="main-content" ref={mainContentRef}>
-        <AdminNavbar {...props} brandText={getBrandText()} />
+        <StudentNavbar {...props} brandText={getBrandText()} />
         {props.children}
         <Container fluid>
-          <AdminFooter />
+          <StudentFooter />
         </Container>
       </div>
     </>

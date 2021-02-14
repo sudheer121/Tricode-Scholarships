@@ -13,7 +13,7 @@ import {
   Col,
 } from "reactstrap";
 
-class AdminNavbar extends React.Component {
+class AuthNavbar extends React.Component {
   render() {
     return (
       <>
@@ -53,7 +53,7 @@ class AdminNavbar extends React.Component {
               </div>
               {/* <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link href="/admin/dashboard">
+                  <Link href="/student/dashboard">
                     <NavLink href="#pablo" className="nav-link-icon">
                       <i className="ni ni-planet" />
                       <span className="nav-link-inner--text">Dashboard</span>
@@ -77,7 +77,7 @@ class AdminNavbar extends React.Component {
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link href="/admin/profile">
+                  <Link href="/student/profile">
                     <NavLink href="#pablo" className="nav-link-icon">
                       <i className="ni ni-single-02" />
                       <span className="nav-link-inner--text">Profile</span>
@@ -93,4 +93,4 @@ class AdminNavbar extends React.Component {
   }
 }
 
-export default AdminNavbar;
+export default AuthNavbar;

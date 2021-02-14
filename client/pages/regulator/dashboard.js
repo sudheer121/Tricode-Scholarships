@@ -68,8 +68,8 @@ const Dashboard = () => {
 
   console.log(auth.role);
 
-  if (auth.role === "admin") {
-    router.push("admin/dashboard");
+  if (auth.role === "student") {
+    router.push("student/dashboard");
   }
 
     return (

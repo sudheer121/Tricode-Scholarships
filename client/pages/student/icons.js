@@ -12,7 +12,7 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 // layout for this page
-import Admin from "layouts/Admin.js";
+import Student from "layouts/Student.js";
 // core components
 import Header from "components/Headers/Header.js";
 
@@ -2884,6 +2884,6 @@ class Icons extends React.Component {
   }
 }
 
-Icons.layout = Admin;
+Icons.layout = Student;
 
 export default Icons;

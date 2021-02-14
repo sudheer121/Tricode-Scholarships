@@ -10,7 +10,7 @@ import {
 // reactstrap components
 import { Card, Container, Row } from "reactstrap";
 // layout for this page
-import Admin from "layouts/Admin.js";
+import Student from "layouts/Student.js";
 // core components
 import Header from "components/Headers/Header.js";
 // mapTypeId={google.maps.MapTypeId.ROADMAP}
@@ -103,6 +103,6 @@ class Maps extends React.Component {
   }
 }
 
-Maps.layout = Admin;
+Maps.layout = Student;
 
 export default Maps;

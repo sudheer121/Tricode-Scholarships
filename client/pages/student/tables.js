@@ -23,7 +23,7 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 // layout for this page
-import Admin from "layouts/Admin.js";
+import Student from "layouts/Student.js";
 // core components
 import Header from "components/Headers/Header.js";
 
@@ -161,6 +161,6 @@ const Tables = () => {
     );
 }
 
-Tables.layout = Admin;
+Tables.layout = Student;
 
 export default Tables;

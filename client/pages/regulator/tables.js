@@ -127,8 +127,8 @@ const Tables = () => {
 
   const auth = useContext(AuthContext);
 
-  if (auth.role === "admin") {
-    router.push("admin/dashboard");
+  if (auth.role === "student") {
+    router.push("student/dashboard");
   }
 
   const countType =  (type)=> {

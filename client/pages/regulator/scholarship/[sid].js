@@ -71,8 +71,8 @@ const Scholarship = () => {
 
   const auth = useContext(AuthContext);
 
-  if (auth.role === "admin") {
-    router.push("admin/dashboard");
+  if (auth.role === "student") {
+    router.push("student/dashboard");
   }
 
     const { sid } = router.query;

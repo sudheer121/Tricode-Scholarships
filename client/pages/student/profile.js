@@ -20,7 +20,7 @@ import {
   Col,
 } from "reactstrap";
 // layout for this page
-import Admin from "layouts/Admin.js";
+import Student from "layouts/Student.js";
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 import Header from "components/Headers/Header.js";
@@ -656,6 +656,6 @@ const Profile = () => {
     );
 }
 
-Profile.layout = Admin;
+Profile.layout = Student;
 
 export default Profile;

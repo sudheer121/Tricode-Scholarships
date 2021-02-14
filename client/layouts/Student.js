@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
-import AdminNavbar from "components/Navbars/AdminNavbar.js";
-import AdminFooter from "components/Footers/AdminFooter.js";
+import StudentNavbar from "components/Navbars/StudentNavbar.js";
+import StudentFooter from "components/Footers/StudentFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import routes from "admin-routes.js";
+import routes from "student-routes.js";
 
-function Admin(props) {
+function Student(props) {
   // used for checking current route
   const router = useRouter();
   let mainContentRef = React.createRef();
@@ -32,20 +32,20 @@ function Admin(props) {
         {...props}
         routes={routes}
         logo={{
-          innerLink: "/admin/index",
+          innerLink: "/student/index",
           imgSrc: require("assets/img/brand/nextjs_argon_black.png"),
           imgAlt: "...",
         }}
       />
       <div className="main-content" ref={mainContentRef}>
-        <AdminNavbar {...props} brandText={getBrandText()} />
+        <StudentNavbar {...props} brandText={getBrandText()} />
         {props.children}
         <Container fluid>
-          <AdminFooter />
+          <StudentFooter />
         </Container>
       </div>
     </>
   );
 }
 
-export default Admin;
+export default Student;
